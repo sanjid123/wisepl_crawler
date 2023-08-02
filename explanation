@@ -1,7 +1,7 @@
 Let's go through the code step by step to understand what each part does:
 
 
-# Install the necessary package
+# Install the necessary packages
 !pip install bing-image-downloader
 
 This line uses the `!` symbol to execute a shell command in the Jupyter/Colab environment. 
