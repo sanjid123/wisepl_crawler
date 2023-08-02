@@ -1,0 +1,79 @@
+Let's go through the code step by step to understand what each part does:
+
+
+# Install the necessary package
+!pip install bing-image-downloader
+
+This line uses the `!` symbol to execute a shell command in the Jupyter/Colab environment. 
+It installs the Python package `bing-image-downloader` using the pip package manager. 
+If the package is not already installed, this command will download and install it.
+
+
+# Import the required modules
+from bing_image_downloader import downloader
+from google.colab import files
+import shutil
+
+These lines import the required modules for the script. 
+`bing_image_downloader` is the library used to download images from Bing, 
+`files` from `google.colab` is used for downloading files, and 
+`shutil` is used for file operations like zipping.
+
+
+# Define search keywords
+search_keywords = [
+    "Your queries 1",
+    "Your queries 2",
+    "Your queries 3",
+    "Your queries 4"
+]
+
+Here, we define a list called `search_keywords`, which contains the search queries we want to use to find images. 
+Replace `"Your queries 1"`, `"Your queries 2"`, etc., with the actual search terms for our requirement.
+
+
+# Set the download limit for each keyword
+download_limit = 25
+
+This line sets the maximum number of images to be downloaded for each search keyword. 
+The `download_limit` variable is set to `25`, meaning that the script will download up to 25 images for each search query.
+
+
+# Create a directory to save the images
+output_dir = "crawled_images"
+!mkdir -p $output_dir
+
+This code creates a directory called `crawled_images` to save the downloaded images. 
+The `!mkdir -p $output_dir` shell command is used to create the directory, and the `$output_dir` variable holds the name of the directory.
+
+
+# Download images for each keyword
+for keyword in search_keywords:
+    downloader.download(keyword, limit=download_limit, output_dir=output_dir)
+
+This is the main loop of the script. 
+It iterates through each search keyword in the `search_keywords` list and downloads images from Bing for each keyword. 
+The `downloader.download()` function is called with the specified `keyword`, `download_limit`, and `output_dir`, 
+which downloads the images and saves them in the `crawled_images` directory.
+
+
+print("Download completed.")
+
+After downloading all the images, this line prints "Download completed." to indicate that the image download process has finished.
+
+
+# Zip the crawled_images directory
+shutil.make_archive("/content/crawled_images", 'zip', "/content/crawled_images")
+
+Here, the `shutil.make_archive()` function is used to create a zip archive of the `crawled_images` directory. 
+The first argument `"/content/crawled_images"` specifies the base name of the archive file (without the extension), 
+and the second argument `'zip'` indicates that the archive will be in ZIP format. 
+The third argument `"/content/crawled_images"` is the directory to be archived.
+
+
+# Download the zip file to your local computer
+files.download("/content/crawled_images.zip")
+
+Finally, this line downloads the created ZIP archive file named `crawled_images.zip` to your local computer using `files.download()` from `google.colab`.
+
+In summary, this code downloads images from Bing based on the specified search queries, saves them in a directory called `crawled_images`, zips the directory, and then provides a download link for the ZIP archive. The user can then download the ZIP file to their local computer, containing the downloaded images.
